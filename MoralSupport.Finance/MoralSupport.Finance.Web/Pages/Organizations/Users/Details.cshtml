@@ -1,0 +1,37 @@
+﻿@page
+@model MoralSupport.Finance.Web.Pages.Organizations.Users.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>UserOrganization</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserOrganization.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserOrganization.User.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserOrganization.Organization)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserOrganization.Organization.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserOrganization.Role)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserOrganization.Role)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.UserOrganization.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
