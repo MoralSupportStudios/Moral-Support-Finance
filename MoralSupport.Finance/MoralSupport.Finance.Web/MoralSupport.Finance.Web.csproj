@@ -16,6 +16,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="MoralSupport.Auth.Application" Version="1.0.0" />
+    <PackageReference Include="MoralSupport.Auth.Infrastructure" Version="1.0.0" />
+    <PackageReference Include="MoralSupport.Authentication.Domain" Version="1.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,6 +3,20 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="container mt-4 text-center">
+        <h2 class="display-5 fw-bold">@Model.Message</h2>
+        <a href="/SignOut" class="btn btn-sm btn-danger">Sign Out</a>
+    </div>
+
+}
+else
+{
+       <div class="container mt-4 text-center">
+        <a href="/SignIn" class="btn btn-sm btn-primary">Sign In</a>
+    </div>
+}
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
