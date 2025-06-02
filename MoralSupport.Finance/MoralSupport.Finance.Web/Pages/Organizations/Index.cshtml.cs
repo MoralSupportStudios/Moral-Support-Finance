@@ -13,11 +13,24 @@ namespace MoralSupport.Finance.Web.Pages.Organizations
             _context = context;
         }
 
-        public IList<Organization> Organizations { get;set; } = default!;
+        public IList<Organization> Organizations { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Organizations = await _context.Organizations.ToListAsync();
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(userId, out var parseUserId))
+            {
+                Organizations = await _context.UserOrganizations
+                                   .Where(uo => uo.UserId == parseUserId)
+                                   .Include(uo => uo.Organization)
+                                   .Select(uo => uo.Organization!)
+                                   .ToListAsync();
+            }
+            else
+            {
+                Organizations = new List<Organization>();
+            }
         }
     }
 }

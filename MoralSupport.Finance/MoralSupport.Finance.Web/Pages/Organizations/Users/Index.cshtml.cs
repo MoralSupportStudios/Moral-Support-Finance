@@ -23,9 +23,21 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
 
         public async Task OnGetAsync()
         {
-            UserOrganization = await _context.UserOrganizations
-                .Include(u => u.Organization)
-                .Include(u => u.User).ToListAsync();
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (int.TryParse(userId, out var parsedUserId))
+            {
+                UserOrganization = await _context.UserOrganizations
+                    .Where(uo => uo.UserId == parsedUserId)
+                    .Include(uo => uo.Organization)
+                    .Include(uo => uo.User)
+                    .ToListAsync();
+            }
+            else
+            {
+                UserOrganization = new List<UserOrganization>();
+            }
+
         }
     }
 }
