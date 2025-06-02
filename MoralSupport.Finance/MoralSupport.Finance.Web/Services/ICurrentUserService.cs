@@ -4,5 +4,7 @@
     {
         int UserId { get; }
         string Email { get; }
+        string Name { get; }
+
     }
 }

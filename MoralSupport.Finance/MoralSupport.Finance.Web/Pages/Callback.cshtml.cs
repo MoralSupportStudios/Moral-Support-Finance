@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication;
 using MoralSupport.Finance.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using MoralSupport.Finance.Domain.Entities;
+using MoralSupport.Authentication.Domain.Entities;
+using User = MoralSupport.Finance.Domain.Entities.User;
 
 namespace MoralSupport.Finance.Web.Pages
 {
@@ -25,6 +27,11 @@ namespace MoralSupport.Finance.Web.Pages
 
         public async Task<IActionResult> OnGetAsync(string id_token)
         {
+            if(User.Identity?.IsAuthenticated == true)
+            {
+                return RedirectToPage("/Index");
+            }
+
             if (string.IsNullOrEmpty(id_token))
             {
                 TempData["Message"] = "No id_token received.";
@@ -32,13 +39,12 @@ namespace MoralSupport.Finance.Web.Pages
             }
 
             var user = await _authService.AuthenticateWithGoogleAsync(id_token);
-            //TempData["Message"] = $"Welcome, {user.Name}!";
-            var existingUser = await _dbContext.Users
-                .FirstOrDefaultAsync(u => u.Email == user.Email);
+            var dbUser = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+                
             {
-                if (existingUser == null)
+                if (dbUser == null)
                 {
-                    var newUser = new User
+                     dbUser= new User
                     {
                         
                         Name = user.Name,
@@ -46,14 +52,15 @@ namespace MoralSupport.Finance.Web.Pages
                     };
            
 
-                    _dbContext.Users.Add(newUser);
+                    _dbContext.Users.Add(dbUser);
                     await _dbContext.SaveChangesAsync();
                 }
 
                 var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Email, user.Email)
+                    new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, dbUser.Id.ToString())
             };
 
                 var identity = new ClaimsIdentity(claims, "MyCookieSchema");

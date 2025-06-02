@@ -9,16 +9,16 @@ namespace MoralSupport.Finance.Web.Pages
 {
     public class IndexModel : PageModel
     {
-        
+        private readonly ICurrentUserService _currentUser;
 
         private readonly AppDbContext _context;
 
-        public IndexModel(AppDbContext context)
+        public IndexModel(AppDbContext context, ICurrentUserService currentUser)
         {
             _context = context;
-            
+            _currentUser = currentUser;
         }
-        
+
 
         public IList<Organization> Organizations { get; set; } = default!;
 
@@ -27,13 +27,28 @@ namespace MoralSupport.Finance.Web.Pages
 
         public async Task OnGetAsync()
         {
-            // Load organizations from the database
-            Organizations = await _context.Organizations.ToListAsync();
 
-            if (User.Identity != null && User.Identity.IsAuthenticated)
+            var userId = _currentUser.UserId;
+
+            if (userId == 0)
             {
-                Message = $"Welcome, {User.Identity.Name}!";
+                Message = "You are not logged in.";
+                return;
             }
+
+
+            // Load organizations from the database
+            Organizations = await _context.UserOrganizations
+               .Where(uo => uo.UserId == userId)
+               .Include(uo => uo.Organization)
+               .Select(uo => uo.Organization!)
+               .ToListAsync();
+
+            Message = $"Welcome, {_currentUser.Name}!";
+
+
+            
+            
                 }
 
         public async Task<IActionResult> OnPostAsync(string organizationName)
@@ -43,12 +58,22 @@ namespace MoralSupport.Finance.Web.Pages
                 return Page();
             }
 
+              var userId = _currentUser.UserId;
+
+            if (userId == 0)
+            {
+                Message = "You must be signed in to create an organization.";
+                return RedirectToPage();
+            }
+
             // Add a new organization to the database
             var org = new Organization { Name = organizationName };
             _context.Organizations.Add(org);
             await _context.SaveChangesAsync();
 
             return RedirectToPage();
+
+
         }
     }
 }

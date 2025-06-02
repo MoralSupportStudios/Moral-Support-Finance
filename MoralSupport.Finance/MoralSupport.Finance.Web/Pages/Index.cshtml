@@ -3,20 +3,18 @@
 @{
     ViewData["Title"] = "Home page";
 }
-@if (!string.IsNullOrEmpty(Model.Message))
+@if (User.Identity?.IsAuthenticated == true)
 {
-    <div class="container mt-4 text-center">
-        <h2 class="display-5 fw-bold">@Model.Message</h2>
-        <a href="/SignOut" class="btn btn-sm btn-danger">Sign Out</a>
-    </div>
-
+    <h2 class="display-5 fw-bold">
+        Welcome, @User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value!
+    </h2>
+    <a href="/SignOut" class="btn btn-sm btn-danger">Sign Out</a>
 }
 else
 {
-       <div class="container mt-4 text-center">
-        <a href="/SignIn" class="btn btn-sm btn-primary">Sign In</a>
-    </div>
+    <a href="/SignIn" class="btn btn-sm btn-primary">Sign In</a>
 }
+
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
