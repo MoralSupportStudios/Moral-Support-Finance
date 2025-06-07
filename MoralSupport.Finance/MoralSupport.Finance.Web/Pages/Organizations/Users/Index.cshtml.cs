@@ -12,9 +12,9 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
 {
     public class IndexModel : PageModel
     {
-        private readonly MoralSupport.Finance.Infrastructure.Persistence.AppDbContext _context;
+        private readonly AppDbContext _context;
 
-        public IndexModel(MoralSupport.Finance.Infrastructure.Persistence.AppDbContext context)
+        public IndexModel(AppDbContext context)
         {
             _context = context;
         }

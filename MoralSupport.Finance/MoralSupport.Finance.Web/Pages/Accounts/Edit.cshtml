@@ -1,0 +1,70 @@
+﻿@page
+@model MoralSupport.Finance.Web.Pages.Accounts.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Account</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Account.Id" />
+            <div class="form-group">
+                <label asp-for="Account.OrganizatoinId" class="control-label"></label>
+                <select asp-for="Account.OrganizatoinId" class="form-control" asp-items="ViewBag.OrganizatoinId"></select>
+                <span asp-validation-for="Account.OrganizatoinId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.UserId" class="control-label"></label>
+                <select asp-for="Account.UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="Account.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.AccountTypeId" class="control-label"></label>
+                <select asp-for="Account.AccountTypeId" class="form-control" asp-items="ViewBag.AccountTypeId"></select>
+                <span asp-validation-for="Account.AccountTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.AccountName" class="control-label"></label>
+                <input asp-for="Account.AccountName" class="form-control" />
+                <span asp-validation-for="Account.AccountName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Account.IsBusiness" /> @Html.DisplayNameFor(model => model.Account.IsBusiness)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Institution" class="control-label"></label>
+                <input asp-for="Account.Institution" class="form-control" />
+                <span asp-validation-for="Account.Institution" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.AccountNumber" class="control-label"></label>
+                <input asp-for="Account.AccountNumber" class="form-control" />
+                <span asp-validation-for="Account.AccountNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Balance" class="control-label"></label>
+                <input asp-for="Account.Balance" class="form-control" />
+                <span asp-validation-for="Account.Balance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,78 @@
+﻿@page
+@model MoralSupport.Finance.Web.Pages.Accounts.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].Organization)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].AccountType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].AccountName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].IsBusiness)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].Institution)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].AccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account[0].Balance)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Account) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Organization.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountType.TypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsBusiness)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Institution)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Balance)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

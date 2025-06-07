@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MoralSupport.Finance.Domain.Entities;
 using MoralSupport.Finance.Infrastructure.Persistence;
 
-namespace MoralSupport.Finance.Web.Pages.Organizations.Users
+namespace MoralSupport.Finance.Web.Pages.Accounts
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
         }
 
         [BindProperty]
-        public UserOrganization UserOrganization { get; set; } = default!;
+        public Account Account { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,15 +29,15 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
                 return NotFound();
             }
 
-            var userorganization = await _context.UserOrganizations.FirstOrDefaultAsync(m => m.Id == id);
+            var account = await _context.Accounts.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (userorganization == null)
+            if (account == null)
             {
                 return NotFound();
             }
             else
             {
-                UserOrganization = userorganization;
+                Account = account;
             }
             return Page();
         }
@@ -49,11 +49,11 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
                 return NotFound();
             }
 
-            var userorganization = await _context.UserOrganizations.FindAsync(id);
-            if (userorganization != null)
+            var account = await _context.Accounts.FindAsync(id);
+            if (account != null)
             {
-                UserOrganization = userorganization;
-                _context.UserOrganizations.Remove(UserOrganization);
+                Account = account;
+                _context.Accounts.Remove(Account);
                 await _context.SaveChangesAsync();
             }
 

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MoralSupport.Finance.Domain.Entities;
 using MoralSupport.Finance.Infrastructure.Persistence;
 
-namespace MoralSupport.Finance.Web.Pages.Organizations.Users
+namespace MoralSupport.Finance.Web.Pages.Accounts
 {
     public class CreateModel : PageModel
     {
@@ -21,13 +21,14 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
 
         public IActionResult OnGet()
         {
-        ViewData["OrganizationId"] = new SelectList(_context.Organizations, "Id", "Name");
+        ViewData["AccountTypeId"] = new SelectList(_context.AccountTypes, "Id", "TypeName");
+        ViewData["OrganizatoinId"] = new SelectList(_context.Organizations, "Id", "Name");
         ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email");
             return Page();
         }
 
         [BindProperty]
-        public UserOrganization UserOrganization { get; set; } = default!;
+        public Account Account { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -37,7 +38,7 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
                 return Page();
             }
 
-            _context.UserOrganizations.Add(UserOrganization);
+            _context.Accounts.Add(Account);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

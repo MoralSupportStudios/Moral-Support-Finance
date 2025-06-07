@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using MoralSupport.Finance.Domain.Entities;
 using MoralSupport.Finance.Infrastructure.Persistence;
 
-namespace MoralSupport.Finance.Web.Pages.Organizations.Users
+namespace MoralSupport.Finance.Web.Pages.Accounts
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
         }
 
         [BindProperty]
-        public UserOrganization UserOrganization { get; set; } = default!;
+        public Account Account { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,13 +30,14 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
                 return NotFound();
             }
 
-            var userorganization =  await _context.UserOrganizations.FirstOrDefaultAsync(m => m.Id == id);
-            if (userorganization == null)
+            var account =  await _context.Accounts.FirstOrDefaultAsync(m => m.Id == id);
+            if (account == null)
             {
                 return NotFound();
             }
-            UserOrganization = userorganization;
-           ViewData["OrganizationId"] = new SelectList(_context.Organizations, "Id", "Name");
+            Account = account;
+           ViewData["AccountTypeId"] = new SelectList(_context.AccountTypes, "Id", "TypeName");
+           ViewData["OrganizatoinId"] = new SelectList(_context.Organizations, "Id", "Name");
            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email");
             return Page();
         }
@@ -50,7 +51,7 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
                 return Page();
             }
 
-            _context.Attach(UserOrganization).State = EntityState.Modified;
+            _context.Attach(Account).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +59,7 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserOrganizationExists(UserOrganization.Id))
+                if (!AccountExists(Account.Id))
                 {
                     return NotFound();
                 }
@@ -71,9 +72,9 @@ namespace MoralSupport.Finance.Web.Pages.Organizations.Users
             return RedirectToPage("./Index");
         }
 
-        private bool UserOrganizationExists(int id)
+        private bool AccountExists(int id)
         {
-            return _context.UserOrganizations.Any(e => e.Id == id);
+            return _context.Accounts.Any(e => e.Id == id);
         }
     }
 }
