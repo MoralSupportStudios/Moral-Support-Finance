@@ -2,8 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using MoralSupport.Authentication.Application.Interfaces;
 using MoralSupport.Authentication.Infrastructure.Auth;
 using MoralSupport.Authentication.Infrastructure.Persistence;
-using MoralSupport.Finance.Domain.Entities;
-using MoralSupport.Finance.Infrastructure;
 using MoralSupport.Finance.Infrastructure.Persistence;
 using MoralSupport.Finance.Web.Services;
 

@@ -13,6 +13,11 @@ namespace MoralSupport.Finance.Infrastructure.Persistence
         public DbSet<User> Users => Set<User>();
         public DbSet<AccountType> AccountTypes => Set<AccountType>();
         public DbSet<Account> Accounts => Set<Account>();
+        public DbSet<Transaction> Transactions => Set<Transaction>();
+        public DbSet<Payee> Payees => Set<Payee>();
+        public DbSet<Category> Categories => Set<Category>();
+        public DbSet<Property> Properties => Set<Property>();
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -87,7 +92,64 @@ namespace MoralSupport.Finance.Infrastructure.Persistence
                       .HasForeignKey(a => a.AccountTypeId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
-        }
+            modelBuilder.Entity<Payee>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.PayeeName).IsRequired().HasMaxLength(255);
+                entity.Property(p => p.Address).HasMaxLength(255);
+                entity.HasOne(p => p.Organization).WithMany().HasForeignKey(p => p.OrganizationId);
+            });
 
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.CategoryName).IsRequired().HasMaxLength(255);
+                entity.HasOne(c => c.Organization).WithMany().HasForeignKey(c => c.OrganizationId);
+            });
+
+            modelBuilder.Entity<Property>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.PropertyName).IsRequired().HasMaxLength(255);
+                entity.Property(p => p.Address).HasMaxLength(255);
+                entity.Property(p => p.Notes).HasMaxLength(500);
+                entity.HasOne(p => p.Organization).WithMany().HasForeignKey(p => p.OrganizationId);
+            });
+
+            modelBuilder.Entity<Transaction>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+
+                entity.Property(t => t.Amount)
+                      .HasColumnType("decimal(18,2)");
+
+                entity.Property(t => t.Description)
+                      .HasMaxLength(500);
+
+                entity.Property(t => t.TransactionDate)
+                      .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.HasOne(t => t.Account)
+                      .WithMany()
+                      .HasForeignKey(t => t.AccountId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(t => t.Payee)
+                      .WithMany()
+                      .HasForeignKey(t => t.PayeeId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(t => t.Property)
+                      .WithMany()
+                      .HasForeignKey(t => t.PropertyId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(t => t.Category)
+                      .WithMany(c => c.Transactions)
+                      .HasForeignKey(t => t.CategoryId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+        }
     }
 }
