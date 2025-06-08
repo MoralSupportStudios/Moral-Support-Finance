@@ -7,7 +7,7 @@
 
 <h1>Edit</h1>
 
-<h4>Organization</h4>
+<h4>Employer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -21,19 +21,24 @@
             </div>
             <div class="form-group">
                 <label asp-for="Organization.CreatedAt" class="control-label"></label>
-                <input asp-for="Organization.CreatedAt" class="form-control" />
+                <input asp-for="Organization.CreatedAt" class="form-control" readonly />
                 <span asp-validation-for="Organization.CreatedAt" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
+
             </div>
         </form>
+        <form method="post" asp-page="./Delete" asp-route-id="@Model.Organization.Id"
+              onsubmit="return confirm('Are you sure you want to delete this Employer?');">
+            <button type="submit" class="btn btn-danger mt-2">Delete</button>
+            <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+        </form>
+
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

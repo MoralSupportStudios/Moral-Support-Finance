@@ -2,47 +2,46 @@
 @model MoralSupport.Finance.Web.Pages.Organizations.Users.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "User Organizations";
 }
 
-<h1>Index</h1>
+<h2 class="text-center mt-4">Employee Management</h2>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserOrganization[0].User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserOrganization[0].Organization)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserOrganization[0].Role)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.UserOrganization) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Organization.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <strong>Assigned Employee</strong>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered mb-0">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Employee</th>
+                        <th>Employer</th>
+                        <th>Role</th>
+                        <th style="width: 200px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.UserOrganization)
+                    {
+                        <tr>
+                            <td>@item.User.Email</td>
+                            <td>@item.Organization.Name</td>
+                            <td>@item.Role</td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">view</a>
+                                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm">edit</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-end">
+            <a asp-page="Create" class="btn btn-success">Assign Employee to Employer</a>
+        </div>
+    </div>
+</div>

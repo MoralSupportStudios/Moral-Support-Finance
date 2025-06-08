@@ -76,5 +76,19 @@ namespace MoralSupport.Finance.Web.Pages.Accounts
         {
             return _context.Accounts.Any(e => e.Id == id);
         }
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                return NotFound();
+            }
+
+            _context.Accounts.Remove(account);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
+        }
+
     }
 }
