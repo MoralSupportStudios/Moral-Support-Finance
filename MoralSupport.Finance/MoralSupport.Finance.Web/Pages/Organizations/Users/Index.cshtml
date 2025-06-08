@@ -32,7 +32,7 @@
                             <td>
                                 <div class="d-flex gap-2">
                                     <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">view</a>
-                                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm">edit</a>
+                                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">edit</a>
                                 </div>
                             </td>
                         </tr>
@@ -40,7 +40,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer text-end">
+        <div class="card-footer">
             <a asp-page="Create" class="btn btn-success">Assign Employee to Employer</a>
         </div>
     </div>

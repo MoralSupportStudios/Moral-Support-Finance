@@ -1,0 +1,53 @@
+﻿@page
+@model MoralSupport.Finance.Web.Pages.Properties.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Property</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Property.OrganizationId" class="control-label"></label>
+                <select asp-for="Property.OrganizationId" class ="form-control" asp-items="ViewBag.OrganizationId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Property.PropertyName" class="control-label"></label>
+                <input asp-for="Property.PropertyName" class="form-control" />
+                <span asp-validation-for="Property.PropertyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Property.Address" class="control-label"></label>
+                <input asp-for="Property.Address" class="form-control" />
+                <span asp-validation-for="Property.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Property.Notes" class="control-label"></label>
+                <input asp-for="Property.Notes" class="form-control" />
+                <span asp-validation-for="Property.Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Property.LastUsed" class="control-label"></label>
+                <input asp-for="Property.LastUsed" class="form-control" />
+                <span asp-validation-for="Property.LastUsed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
