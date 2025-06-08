@@ -5,8 +5,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using MoralSupport.Finance.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using MoralSupport.Finance.Domain.Entities;
-using MoralSupport.Authentication.Domain.Entities;
 using User = MoralSupport.Finance.Domain.Entities.User;
 
 namespace MoralSupport.Finance.Web.Pages

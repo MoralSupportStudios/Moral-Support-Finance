@@ -25,4 +25,8 @@
     <ProjectReference Include="..\MoralSupport.Finance.Domain\MoralSupport.Finance.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

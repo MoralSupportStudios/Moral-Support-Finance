@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
 
 namespace MoralSupport.Finance.Web.Services
 {

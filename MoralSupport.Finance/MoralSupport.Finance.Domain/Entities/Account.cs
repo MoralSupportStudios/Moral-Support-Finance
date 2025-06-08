@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MoralSupport.Finance.Domain.Entities
+﻿namespace MoralSupport.Finance.Domain.Entities
 {
     public class Account
     {
