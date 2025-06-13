@@ -23,9 +23,9 @@ namespace MoralSupport.Finance.Web.Pages.Properties
 
         public async Task OnGetAsync()
         {
-              //this is an issue
+            //this is an issue
             Property = await _context.Properties
-                .Include(@ => @.Organization).ToListAsync();
+                .Include(p => p.Organization).ToListAsync();
         }
     }
 }
